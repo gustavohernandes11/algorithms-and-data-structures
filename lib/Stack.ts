@@ -1,47 +1,54 @@
 export class Stack {
-	count: number;
-	items: any;
+	_count: number;
+	_items: any;
 
 	constructor() {
-		this.count = 0;
-		this.items = {};
+		this._count = 0;
+		this._items = {};
+	}
+	isEmpty() {
+		return this._count === 0;
+	}
+	clear() {
+		this._count = 0;
+		this._items = {};
 	}
 	peek() {
-		return this.items[this.count - 1];
+		return this._items[this._count - 1];
 	}
 	pop() {
-		let poppedItem = this.items[this.count - 1];
-		delete this.items[this.count - 1];
-		this.count--;
+		if (this._count === 0) {
+			return;
+		}
+		let poppedItem = this._items[this._count - 1];
+		delete this._items[this._count - 1];
+		this._count--;
 		return poppedItem;
 	}
 	push(item: string | string[]) {
 		if (item instanceof Array) {
 			item.forEach((item) => {
 				if (item !== "") {
-					this.items[this.count] = item;
-					this.count++;
+					this._items[this._count] = item;
+					this._count++;
 				}
 			});
 		} else {
-			this.items[this.count] = item;
-			this.count++;
+			this._items[this._count] = item;
+			this._count++;
 		}
 	}
 
 	toString() {
 		let newArray: (string | number)[] = [];
 		let finalString: string;
-		if (!!this.items) {
-			for (let i = 0; i < this.count; i++) {
-				if (this.items[i] !== "") {
-					newArray.push(this.items[i]);
-				}
+		for (let i = 0; i < this._count; i++) {
+			if (this._items[i] !== "") {
+				newArray.push(this._items[i]);
 			}
-			finalString = newArray.join(", ");
-		} else {
-			finalString = "";
 		}
+		finalString = newArray.join(", ");
+
 		return finalString;
 	}
 }
