@@ -69,8 +69,7 @@ describe("Stack", () => {
 		});
 		it("should return undefined if stack is empty", () => {
 			let stack = new Stack();
-			let expectedValue = undefined;
-			expect(stack.peek()).toBe(expectedValue);
+			expect(stack.peek()).toBe(undefined);
 		});
 	});
 	describe("isEmpty()", () => {
@@ -97,6 +96,18 @@ describe("Stack", () => {
 			stack.clear();
 			expect(stack.toString()).toBe("");
 			expect(stack.isEmpty()).toBe(true);
+		});
+		it("should reset the stack completely", () => {
+			let cleanedStack = new Stack();
+			let stackWithNoChanges = new Stack();
+			cleanedStack.push(["A", "B", "C"]);
+			cleanedStack.clear();
+
+			expect(cleanedStack.toString()).toBe(stackWithNoChanges.toString());
+			expect(cleanedStack._items).toStrictEqual(
+				stackWithNoChanges._items
+			);
+			expect(cleanedStack._count).toBe(stackWithNoChanges._count);
 		});
 	});
 });
