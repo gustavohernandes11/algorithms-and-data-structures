@@ -1,3 +1,3 @@
-// initial file
+import {Stack} from "./Stack";
 
-export {};
+const stack = new Stack();
