@@ -1,3 +1,3 @@
+import {Queue} from "./Queue";
 import {Stack} from "./Stack";
-
-const stack = new Stack();
+import {Deque} from "./Deque";
