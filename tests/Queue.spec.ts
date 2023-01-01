@@ -36,7 +36,7 @@ describe("Queue", () => {
 			queue.enqueue(["A", "B", "C", "D", "E"]);
 
 			const queueItems = queue.toString();
-			const count = queue.count;
+			const count = queue._count;
 			expect(queueItems).toBe("A, B, C, D, E");
 			expect(count).toBe(5);
 		});
@@ -54,31 +54,31 @@ describe("Queue", () => {
 			const queue = new Queue();
 
 			queue.enqueue(["A", "B", "C", "D", "E"]);
-			expect(queue.count).toBe(5);
-			expect(queue.lowestCount).toBe(0);
+			expect(queue._count).toBe(5);
+			expect(queue._lowestCount).toBe(0);
 			expect(queue.toString()).toBe("A, B, C, D, E");
 
 			queue.dequeue();
-			expect(queue.count).toBe(4);
-			expect(queue.lowestCount).toBe(1);
+			expect(queue._count).toBe(4);
+			expect(queue._lowestCount).toBe(1);
 			expect(queue.toString()).toBe("B, C, D, E");
 
 			queue.dequeue();
-			expect(queue.count).toBe(3);
-			expect(queue.lowestCount).toBe(2);
+			expect(queue._count).toBe(3);
+			expect(queue._lowestCount).toBe(2);
 			expect(queue.toString()).toBe("C, D, E");
 
 			queue.dequeue();
-			expect(queue.count).toBe(2);
-			expect(queue.lowestCount).toBe(3);
+			expect(queue._count).toBe(2);
+			expect(queue._lowestCount).toBe(3);
 			expect(queue.toString()).toBe("D, E");
 		});
 		it("should just return undefined when items is empty", () => {
 			const queue = new Queue();
 			const returnedValue = queue.dequeue();
 			expect(returnedValue).toBe(undefined);
-			expect(queue.count).toBe(0);
-			expect(queue.lowestCount).toBe(0);
+			expect(queue._count).toBe(0);
+			expect(queue._lowestCount).toBe(0);
 		});
 	});
 	describe("peek()", () => {
@@ -95,9 +95,9 @@ describe("Queue", () => {
 			queue.enqueue(["A", "B"]);
 			queue.peek();
 
-			expect(queue.count).toBe(2);
-			expect(queue.lowestCount).toBe(0);
-			expect(queue.items).toStrictEqual({0: "A", 1: "B"});
+			expect(queue._count).toBe(2);
+			expect(queue._lowestCount).toBe(0);
+			expect(queue._items).toStrictEqual({0: "A", 1: "B"});
 		});
 		it("should return undefined when items is empty", () => {
 			const queue = new Queue();
@@ -125,9 +125,9 @@ describe("Queue", () => {
 			queue.enqueue(["A", "B", "C"]);
 			queue.clear();
 
-			expect(queue.count).toBe(0);
-			expect(queue.lowestCount).toBe(0);
-			expect(queue.items).toStrictEqual({});
+			expect(queue._count).toBe(0);
+			expect(queue._lowestCount).toBe(0);
+			expect(queue._items).toStrictEqual({});
 		});
 	});
 });

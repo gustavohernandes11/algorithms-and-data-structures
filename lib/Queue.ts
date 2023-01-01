@@ -1,37 +1,41 @@
 export class Queue {
-	count: number;
-	lowestCount: number;
-	items: any;
+	_count: number;
+	_lowestCount: number;
+	_items: any;
 	constructor() {
-		this.count = 0;
-		this.lowestCount = 0;
-		this.items = {};
+		this._count = 0;
+		this._lowestCount = 0;
+		this._items = {};
 	}
 	enqueue(newItems: string | string[]) {
 		if (newItems instanceof Array) {
 			for (const item of newItems) {
-				this.items[this.count] = item.trim();
-				this.count++;
+				this._items[this._count] = item.trim();
+				this._count++;
 			}
 		} else {
-			this.items[this.count] = newItems.trim();
-			this.count++;
+			this._items[this._count] = newItems.trim();
+			this._count++;
 		}
 	}
 	dequeue() {
-		if (this.items[this.lowestCount] === undefined) return undefined;
-		let deletedItem = this.items[this.lowestCount];
-		delete this.items[this.lowestCount];
-		this.lowestCount++;
-		this.count--;
+		if (this._items[this._lowestCount] === undefined) return undefined;
+		let deletedItem = this._items[this._lowestCount];
+		delete this._items[this._lowestCount];
+		this._lowestCount++;
+		this._count--;
 		return deletedItem;
 	}
 	toString() {
 		let array: string[] = [];
 
-		for (let i = this.lowestCount; i < this.count + this.lowestCount; i++) {
-			if (this.items[i] !== "") {
-				array.push(this.items[i]);
+		for (
+			let i = this._lowestCount;
+			i < this._count + this._lowestCount;
+			i++
+		) {
+			if (this._items[i] !== "") {
+				array.push(this._items[i]);
 			}
 		}
 
@@ -39,14 +43,14 @@ export class Queue {
 		return finalString;
 	}
 	peek() {
-		return this.items[this.lowestCount];
+		return this._items[this._lowestCount];
 	}
 	size() {
-		return this.count;
+		return this._count;
 	}
 	clear() {
-		this.count = 0;
-		this.lowestCount = 0;
-		this.items = {};
+		this._count = 0;
+		this._lowestCount = 0;
+		this._items = {};
 	}
 }
