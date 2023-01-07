@@ -48,7 +48,6 @@ export class Deque {
 		}
 	}
 	removeFront() {
-		if (this._items[this._lowestCount] === undefined) return undefined;
 		let deletedItem = this._items[this._lowestCount];
 		delete this._items[this._lowestCount];
 		this._lowestCount++;
