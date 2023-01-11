@@ -1,10 +1,15 @@
+type ValidDataTypes = string | number;
+
 export class LinkedList {
 	head: any;
 	count = 0;
-	constructor() {}
+	constructor(head?: Node, count: number = 0) {
+		this.head = head;
+		this.count = count;
+	}
 
-	push(item: any) {
-		if (item === "" || item == undefined) return undefined;
+	push(item: ValidDataTypes) {
+		if (item === "" || item == null) return undefined;
 		if (this.head == null) {
 			this.head = new Node(item);
 			this.count++;
@@ -30,7 +35,7 @@ export class LinkedList {
 			return objString;
 		}
 	}
-	insert(item: string | number, index: number) {
+	insert(item: ValidDataTypes, index: number) {
 		if (item != null && index <= this.count && index >= 0) {
 			if (index === 0) {
 				this.head = new Node(item, this.head);
@@ -84,7 +89,7 @@ export class LinkedList {
 		}
 	}
 
-	remove(item: string | number) {
+	remove(item: ValidDataTypes) {
 		let current = this.head;
 		if (this.head.value === item) {
 			this.head = this.head.next;
@@ -105,7 +110,7 @@ export class LinkedList {
 		}
 		return false;
 	}
-	indexOf(item: string | number) {
+	indexOf(item: ValidDataTypes) {
 		let current = this.head;
 		for (let index = 0; index < this.count; index++) {
 			if (current.value == item) {
@@ -124,11 +129,11 @@ export class LinkedList {
 	}
 }
 
-class Node {
-	value: any;
-	next?: any;
+export class Node {
+	value: ValidDataTypes;
+	next?: Node;
 
-	constructor(value: any, next?: any) {
+	constructor(value: any, next?: Node) {
 		this.value = value;
 		this.next = next;
 	}
