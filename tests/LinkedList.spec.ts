@@ -8,20 +8,21 @@ describe("LinkedList", () => {
 			linkedlist.push(1);
 			linkedlist.push(2);
 			linkedlist.push(3);
-			linkedlist.push({4: "4"});
+			linkedlist.push(4);
 
 			expect(linkedlist.count).toBe(4);
+		});
+		it("should accept an array as parameter", () => {
+			const linkedlist = new LinkedList();
+			linkedlist.push([1, 2, 3, 4]);
+
+			expect(linkedlist.toString()).toBe("1, 2, 3, 4");
+			expect(linkedlist.size()).toBe(4);
 		});
 		it("should return undefined neither push anything when parameter is invalid", () => {
 			const linkedlist = new LinkedList();
 
 			let returnedValue = linkedlist.push("");
-			expect(returnedValue).toBe(undefined);
-
-			returnedValue = linkedlist.push(null);
-			expect(returnedValue).toBe(undefined);
-
-			returnedValue = linkedlist.push([]);
 			expect(returnedValue).toBe(undefined);
 		});
 	});

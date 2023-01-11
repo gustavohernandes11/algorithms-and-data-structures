@@ -3,23 +3,30 @@ type ValidDataTypes = string | number;
 export class LinkedList {
 	head: any;
 	count = 0;
-	constructor(head?: Node, count: number = 0) {
-		this.head = head;
-		this.count = count;
-	}
+	constructor() {}
 
-	push(item: ValidDataTypes) {
-		if (item === "" || item == null) return undefined;
-		if (this.head == null) {
-			this.head = new Node(item);
-			this.count++;
-		} else {
-			let current = this.head;
-			while (current.next != null) {
-				current = current.next;
+	push(item: ValidDataTypes | ValidDataTypes[]) {
+		const pushItem = (element: ValidDataTypes) => {
+			if (this.head == null) {
+				this.head = new Node(element);
+				this.count++;
+			} else {
+				let current = this.head;
+				while (current.next != null) {
+					current = current.next;
+				}
+				current.next = new Node(element);
+				this.count++;
 			}
-			current.next = new Node(item);
-			this.count++;
+		};
+
+		if (item === "" || item == null) return undefined;
+		if (item instanceof Array) {
+			item.forEach((element) => {
+				pushItem(element);
+			});
+		} else {
+			pushItem(item);
 		}
 	}
 	toString() {
