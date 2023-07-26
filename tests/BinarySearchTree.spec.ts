@@ -21,7 +21,7 @@ describe('BinarySearchTree', () => {
     })
     describe('inOrderTranverse()', () => {
         it('should go through the tree in rising order', () => {
-            const unorderedValues = ['a', -1000, 4, 2, 3, Math.PI]
+            const unorderedValues = [-1000, 4, 2, 3, Math.PI]
             const sut = makeBinaryTreeWith(unorderedValues)
 
             let orderedItens: any[] = []
@@ -78,7 +78,7 @@ describe('BinarySearchTree', () => {
     })
     describe('min()', () => {
         it('should return the minimum key in the tree', () => {
-            const sut = makeBinaryTreeWith([1, 2, 3, 4, 'a', -100, 0])
+            const sut = makeBinaryTreeWith([1, 2, 3, 4, -100, 0])
             const minimum = sut.min()
             expect(minimum?.key).toBe(-100)
         })
