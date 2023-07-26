@@ -1,4 +1,6 @@
-type ValidDataTypes = string | number
+import { Node } from './models/Node'
+
+export type ValidDataTypes = string | number
 
 export class LinkedList {
     head: any
@@ -133,15 +135,5 @@ export class LinkedList {
     }
     isEmpty() {
         return this.count === 0
-    }
-}
-
-export class Node {
-    value: ValidDataTypes
-    next?: Node
-
-    constructor(value: any, next?: Node) {
-        this.value = value
-        this.next = next
     }
 }

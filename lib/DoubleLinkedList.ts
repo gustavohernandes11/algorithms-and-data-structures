@@ -1,5 +1,6 @@
-import { Node, LinkedList } from './LinkedList'
-type ValidDataTypes = string | number
+import { DoubleNode } from './models/DoubleNode'
+import { LinkedList } from './LinkedList'
+export type ValidDataTypes = string | number
 
 export class DoubleLinkedList extends LinkedList {
     tail: any
@@ -128,13 +129,5 @@ export class DoubleLinkedList extends LinkedList {
         } else {
             return undefined
         }
-    }
-}
-
-class DoubleNode extends Node {
-    previous?: DoubleNode
-    next?: DoubleNode
-    constructor(value?: ValidDataTypes) {
-        super(value)
     }
 }
