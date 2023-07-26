@@ -3,12 +3,12 @@ import {
     NullableBinaryNode,
     ValidValueType,
 } from './models/BinaryNode'
-import { defaultCompareFn } from './utils/defaultCompare'
+import { Compare, defaultCompare } from './utils/defaultCompare'
 
 export class BinarySearchTree {
     compareFn: Function
     private root: NullableBinaryNode = null
-    constructor(compareFn = defaultCompareFn) {
+    constructor(compareFn = defaultCompare) {
         this.compareFn = compareFn
     }
 
@@ -19,9 +19,8 @@ export class BinarySearchTree {
             this.insertNode(this.root, key)
         }
     }
-
     private insertNode(node: BinaryNode, key: ValidValueType) {
-        if (node.key >= key) {
+        if (this.compareFn(node.key, key) === Compare.BIGGER_THAN) {
             if (node.left == null) {
                 node.left = new BinaryNode(key)
             } else {
@@ -42,11 +41,11 @@ export class BinarySearchTree {
     }
     private searchNode(key: ValidValueType, node: NullableBinaryNode): any {
         if (node == null) return null
-        if (node.key > key) {
+        if (this.compareFn(node.key, key) === Compare.BIGGER_THAN) {
             return this.searchNode(key, node.left)
-        } else if (node.key < key) {
+        } else if (this.compareFn(node.key, key) === Compare.LESS_THAN) {
             return this.searchNode(key, node.right)
-        } else if (this.compareFn(node.key, key)) {
+        } else {
             return node
         }
     }
@@ -122,10 +121,10 @@ export class BinarySearchTree {
         key: ValidValueType
     ): NullableBinaryNode {
         if (node == null) return null
-        if (node.key > key) {
+        if (this.compareFn(node.key, key) === Compare.BIGGER_THAN) {
             node.left = this.removeNode(node.left, key)
             return node
-        } else if (node.key < key) {
+        } else if (this.compareFn(node.key, key) === Compare.LESS_THAN) {
             node.right = this.removeNode(node.right, key)
             return node
         } else {
