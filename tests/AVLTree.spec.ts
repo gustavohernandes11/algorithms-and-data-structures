@@ -48,9 +48,16 @@ describe('AVLTree', () => {
         })
     })
     describe('insert()', () => {
-        // it('should balance correctly after insert a value', () => {
-        //     const sut = makeAVLWith([1, 2, 3, 4, 5, 6, 7, 8, 9])
-        //     expect(sut.getBalanceFactor(sut.root)).toBe(2 || 3 || 4)
-        // })
+        it('should balance correctly after insert a value', () => {
+            const sut = makeAVLWith([1, 2, 3, 4, 5, 6, 7, 8, 9])
+            const factor = sut.getBalanceFactor(sut.root)
+
+            expect(factor).toBeGreaterThanOrEqual(
+                BalanceFactor.SLIGHTLY_UNBALANCED_RIGHT
+            )
+            expect(factor).toBeLessThanOrEqual(
+                BalanceFactor.SLIGHTLY_UNBALANCED_LEFT
+            )
+        })
     })
 })
