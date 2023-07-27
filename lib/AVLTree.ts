@@ -58,15 +58,17 @@ export class AVLTree extends BinarySearchTree {
     //     return null
     // }
     rotationLL(node: NullableBinaryNode) {
+        if (node == null) return null
         const temp = node.left
-        node.left = temp.right
-        temp.right = node
+        node.left = temp?.right || null
+        if (temp) temp.right = node
         return temp
     }
     rotationRR(node: NullableBinaryNode) {
+        if (node == null) return null
         const temp = node.right
-        node.right = temp.left
-        temp.left = node
+        node.right = temp?.left || null
+        if (temp) temp.left = node
         return temp
     }
     rotationRL(node: NullableBinaryNode) {
