@@ -22,6 +22,11 @@ export class AVLTree extends BinarySearchTree {
         this.root = null
     }
 
+    count() {
+        let _count = 0
+        super.inOrderTranverse(() => _count++)
+        return _count
+    }
     getNodeHeight(node: NullableBinaryNode): number {
         if (node == null) {
             return -1
@@ -51,60 +56,69 @@ export class AVLTree extends BinarySearchTree {
                 return BalanceFactor.BALANCED
         }
     }
-    // override removeNode(
-    //     node: NullableBinaryNode,
-    //     key: ValidValueType
-    // ): NullableBinaryNode {
-    //     return null
-    // }
-    rotationLL(node: NullableBinaryNode) {
+
+    rotationLL(node: NullableBinaryNode): NullableBinaryNode {
         if (node == null) return null
+
         const temp = node.left
-        node.left = temp?.right || null
-        if (temp) temp.right = node
+        if (temp != null) {
+            node.left = temp.right
+            temp.right = node
+        }
         return temp
     }
-    rotationRR(node: NullableBinaryNode) {
+
+    rotationRR(node: NullableBinaryNode): NullableBinaryNode {
         if (node == null) return null
+
         const temp = node.right
-        node.right = temp?.left || null
-        if (temp) temp.left = node
+        if (temp != null) {
+            node.right = temp.left
+            temp.left = node
+        }
         return temp
     }
-    rotationRL(node: NullableBinaryNode) {
-        if (!!node) node.right = this.rotationLL(node.right)
+
+    rotationRL(node: NullableBinaryNode): NullableBinaryNode {
+        if (node == null) return null
+
+        if (node.right != null) {
+            node.right = this.rotationLL(node.right)
+        }
         return this.rotationRR(node)
     }
-    rotationLR(node: NullableBinaryNode) {
-        if (!!node) node.right = this.rotationLL(node.right)
-        return this.rotationRR(node)
+
+    rotationLR(node: NullableBinaryNode): NullableBinaryNode {
+        if (node == null) return null
+
+        if (node.left != null) {
+            node.left = this.rotationRR(node.left)
+        }
+        return this.rotationLL(node)
     }
+
     unbalancedInsert(key: ValidValueType) {
         if (this.root == null) this.root = new BinaryNode(key)
         else super.insertNode(this.root, key)
     }
 
-    override insert(key: ValidValueType) {
-        if (!this.root) {
-            this.root = new BinaryNode(key)
-        } else {
-            this.insertNode(this.root, key)
-        }
+    insert(key: ValidValueType) {
+        this.root = this.insertNode(this.root, key)
     }
-    override insertNode(node: NullableBinaryNode, key: ValidValueType) {
-        if (this.compareFn(node?.key, key) === Compare.BIGGER_THAN) {
-            if (node?.left == null) {
-                node!.left = new BinaryNode(key)
-            } else {
-                this.insertNode(node?.left, key)
-            }
+    override insertNode(
+        node: NullableBinaryNode,
+        key: ValidValueType
+    ): NullableBinaryNode {
+        if (node == null) {
+            return new BinaryNode(key)
+        } else if (this.compareFn(key, node.key) === Compare.LESS_THAN) {
+            node.left = this.insertNode(node.left, key)
+        } else if (this.compareFn(key, node.key) === Compare.BIGGER_THAN) {
+            node.right = this.insertNode(node.right, key)
         } else {
-            if (node?.right == null) {
-                node!.right = new BinaryNode(key)
-            } else {
-                this.insertNode(node?.right, key)
-            }
+            return node // chave duplicada
         }
+
         const balanceFactor = this.getBalanceFactor(node)
         if (balanceFactor === BalanceFactor.UNBALANCED_LEFT) {
             if (this.compareFn(key, node!.left?.key) === Compare.LESS_THAN) {
@@ -112,12 +126,58 @@ export class AVLTree extends BinarySearchTree {
             } else {
                 return this.rotationLR(node)
             }
-        } else if (balanceFactor === BalanceFactor.UNBALANCED_RIGHT) {
-            if (this.compareFn(key, node!.right?.key) === Compare.LESS_THAN) {
+        }
+        if (balanceFactor === BalanceFactor.UNBALANCED_RIGHT) {
+            if (this.compareFn(key, node!.right?.key) === Compare.BIGGER_THAN) {
                 node = this.rotationRR(node)
             } else {
                 return this.rotationRL(node)
             }
         }
+        return node
+    }
+    removeNode(
+        node: NullableBinaryNode,
+        key: ValidValueType
+    ): NullableBinaryNode {
+        if (node == null) return null
+
+        node = super.removeNode(node, key)
+
+        if (node == null) return node
+
+        const balanceFactor = this.getBalanceFactor(node)
+
+        if (balanceFactor === BalanceFactor.UNBALANCED_LEFT) {
+            const balanceFactorLeft = this.getBalanceFactor(node.left)
+
+            if (
+                balanceFactorLeft === BalanceFactor.BALANCED ||
+                balanceFactorLeft === BalanceFactor.SLIGHTLY_UNBALANCED_LEFT
+            ) {
+                return this.rotationLL(node)
+            }
+
+            if (balanceFactorLeft === BalanceFactor.SLIGHTLY_UNBALANCED_RIGHT) {
+                return this.rotationLR(node)
+            }
+        }
+
+        if (balanceFactor === BalanceFactor.UNBALANCED_RIGHT) {
+            const balanceFactorRight = this.getBalanceFactor(node.right)
+
+            if (
+                balanceFactorRight === BalanceFactor.BALANCED ||
+                balanceFactorRight === BalanceFactor.SLIGHTLY_UNBALANCED_RIGHT
+            ) {
+                return this.rotationRR(node)
+            }
+
+            if (balanceFactorRight === BalanceFactor.SLIGHTLY_UNBALANCED_LEFT) {
+                return this.rotationRL(node)
+            }
+        }
+
+        return node
     }
 }

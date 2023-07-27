@@ -1,6 +1,10 @@
 import { expect, it, describe, jest } from '@jest/globals'
 import { AVLTree, BalanceFactor } from '../lib/AVLTree'
-import { ValidValueType } from '../lib/models/BinaryNode'
+import {
+    BinaryNode,
+    NullableBinaryNode,
+    ValidValueType,
+} from '../lib/models/BinaryNode'
 
 describe('AVLTree', () => {
     function makeUnbalancedAVLTree(keys?: ValidValueType[]) {
@@ -48,7 +52,12 @@ describe('AVLTree', () => {
         })
     })
     describe('insert()', () => {
-        it('should balance correctly after insert a value', () => {
+        it('should insert the correct values in the AVLtree', () => {
+            const sut = makeAVLWith([1, 2, 3])
+            expect(sut.count()).toBe(3)
+        })
+
+        it('should balance correctly after insert values', () => {
             const sut = makeAVLWith([1, 2, 3, 4, 5, 6, 7, 8, 9])
             const factor = sut.getBalanceFactor(sut.root)
 
@@ -60,4 +69,28 @@ describe('AVLTree', () => {
             )
         })
     })
+    // describe('remove()', () => {
+    //     it('should remove the items correctly', () => {
+    //         const sut = makeAVLWith([1, 2, 3, 4, 5, 6, 7, 8, 9])
+    //         sut.remove(5)
+    //         expect(sut.count()).toBe(8)
+    //     })
+
+    //     it('should balance correctly after remove values', () => {
+    //         const sut = makeAVLWith([1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+    //         sut.remove(5)
+    //         sut.remove(2)
+    //         sut.remove(8)
+
+    //         const factor = sut.getBalanceFactor(sut.root)
+
+    //         expect(factor).toBeGreaterThanOrEqual(
+    //             BalanceFactor.SLIGHTLY_UNBALANCED_RIGHT
+    //         )
+    //         expect(factor).toBeLessThanOrEqual(
+    //             BalanceFactor.SLIGHTLY_UNBALANCED_LEFT
+    //         )
+    //     })
+    // })
 })
