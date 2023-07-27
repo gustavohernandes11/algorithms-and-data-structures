@@ -24,6 +24,7 @@ describe('AVLTree', () => {
     describe('getBalanceFactor()', () => {
         it('should return BALANCED if the AVL tree is empty', () => {
             const sut = makeUnbalancedAVLTree([])
+            expect(sut.count()).toBe(0)
             expect(sut.getBalanceFactor(sut.root)).toBe(BalanceFactor.BALANCED)
         })
         it('should return SLIGHTLY_UNBALANCED_RIGHT if the AVL tree has only 1 more node at right', () => {
@@ -69,28 +70,36 @@ describe('AVLTree', () => {
             )
         })
     })
-    // describe('remove()', () => {
-    //     it('should remove the items correctly', () => {
-    //         const sut = makeAVLWith([1, 2, 3, 4, 5, 6, 7, 8, 9])
-    //         sut.remove(5)
-    //         expect(sut.count()).toBe(8)
-    //     })
+    describe('remove()', () => {
+        it('should remove the items correctly', () => {
+            const initValues = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            const sut = makeAVLWith(initValues)
 
-    //     it('should balance correctly after remove values', () => {
-    //         const sut = makeAVLWith([1, 2, 3, 4, 5, 6, 7, 8, 9])
+            sut.remove(5)
+            expect(sut.count()).toBe(initValues.length - 1)
 
-    //         sut.remove(5)
-    //         sut.remove(2)
-    //         sut.remove(8)
+            sut.remove(2)
+            expect(sut.count()).toBe(initValues.length - 2)
 
-    //         const factor = sut.getBalanceFactor(sut.root)
+            sut.remove(8)
+            expect(sut.count()).toBe(initValues.length - 3)
+        })
 
-    //         expect(factor).toBeGreaterThanOrEqual(
-    //             BalanceFactor.SLIGHTLY_UNBALANCED_RIGHT
-    //         )
-    //         expect(factor).toBeLessThanOrEqual(
-    //             BalanceFactor.SLIGHTLY_UNBALANCED_LEFT
-    //         )
-    //     })
-    // })
+        it('should balance correctly after remove values', () => {
+            const initValues = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            const sut = makeAVLWith(initValues)
+
+            sut.remove(5)
+            sut.remove(2)
+            sut.remove(8)
+
+            const factor = sut.getBalanceFactor(sut.root)
+            expect(factor).toBeGreaterThanOrEqual(
+                BalanceFactor.SLIGHTLY_UNBALANCED_RIGHT
+            )
+            expect(factor).toBeLessThanOrEqual(
+                BalanceFactor.SLIGHTLY_UNBALANCED_LEFT
+            )
+        })
+    })
 })
