@@ -7,7 +7,7 @@ import { Compare, defaultCompare } from './utils/defaultCompare'
 
 export class BinarySearchTree {
     compareFn: Function
-    private root: NullableBinaryNode = null
+    root: NullableBinaryNode = null
     constructor(compareFn = defaultCompare) {
         this.compareFn = compareFn
     }
@@ -19,7 +19,7 @@ export class BinarySearchTree {
             this.insertNode(this.root, key)
         }
     }
-    private insertNode(node: BinaryNode, key: ValidValueType) {
+    protected insertNode(node: BinaryNode, key: ValidValueType) {
         if (this.compareFn(node.key, key) === Compare.BIGGER_THAN) {
             if (node.left == null) {
                 node.left = new BinaryNode(key)
@@ -116,7 +116,7 @@ export class BinarySearchTree {
     remove(key: ValidValueType) {
         this.root = this.removeNode(this.root, key)
     }
-    private removeNode(
+    protected removeNode(
         node: NullableBinaryNode,
         key: ValidValueType
     ): NullableBinaryNode {
