@@ -18,6 +18,32 @@ describe('MinHeap', () => {
 
         return range
     }
+    describe('getParentIndex()', () => {
+        it('should return the parent index', () => {
+            const sut = makeMinHeapWith([0, 1, 2])
+            const parentFromLeft = sut.getParentIndex(1)
+            const parentFromRight = sut.getParentIndex(2)
+
+            expect(parentFromLeft).toBe(0)
+            expect(parentFromRight).toBe(0)
+        })
+    })
+    describe('getLeftIndex()', () => {
+        it('should return the left child index', () => {
+            const sut = makeMinHeapWith([0, 1, 2])
+            const left = sut.getLeftIndex(0)
+
+            expect(left).toBe(1)
+        })
+    })
+    describe('getRightIndex()', () => {
+        it('should return the right child index', () => {
+            const sut = makeMinHeapWith([0, 1, 2])
+            const right = sut.getRightIndex(0)
+
+            expect(right).toBe(2)
+        })
+    })
     describe('insert()', () => {
         it('should effectively insert the values into the heap', () => {
             const sut = makeMinHeapWith([1, 2, 3, 4, 5, 6])
