@@ -9,6 +9,23 @@ export class MinHeap {
         this.compareFn = compareFn
     }
 
+    size() {
+        return this.heap.length
+    }
+    isEmpty() {
+        return this.heap.length === 0
+    }
+    findMinimun() {
+        return this.isEmpty() ? undefined : this.heap[0]
+    }
+    extract() {
+        if (this.isEmpty()) return undefined
+        if (this.size() === 1) return this.heap.shift()
+
+        const removedItem = this.heap.shift()
+        this.siftDown(0)
+        return removedItem
+    }
     getLeftIndex(index: number): number {
         return 2 * this.heap[index] + 1
     }
@@ -17,7 +34,7 @@ export class MinHeap {
     }
     getParentIndex(index: number) {
         if (index === 0) return null
-        return Math.floor(index - 1 / 2)
+        return Math.floor((index - 1) / 2)
     }
     insert(value: number): boolean {
         if (value != null) {
@@ -27,6 +44,32 @@ export class MinHeap {
         }
         return false
     }
+    protected siftDown(index: number) {
+        let element = index
+        const left = this.getLeftIndex(index)
+        const right = this.getRightIndex(index)
+        const size = this.size()
+
+        if (
+            left < size &&
+            this.compareFn(this.heap[element], this.heap[left]) >
+                Compare.BIGGER_THAN
+        ) {
+            element = left
+        }
+        if (
+            right < size &&
+            this.compareFn(this.heap[element], this.heap[right]) >
+                Compare.BIGGER_THAN
+        ) {
+            element = right
+        }
+        if (index !== element) {
+            this.swap(this.heap, index, element)
+            this.siftDown(element)
+        }
+    }
+
     protected siftUp(index: number) {
         let parent = this.getParentIndex(index)
         while (
@@ -45,9 +88,3 @@ export class MinHeap {
         array[b] = temp
     }
 }
-
-// insert(value)
-// extract()
-// findMinimum
-// this.siftUp
-// swap
