@@ -67,4 +67,32 @@ describe('MinHeap', () => {
             }
         })
     })
+    describe('extract()', () => {
+        it('should return the removed item', () => {
+            const sut = makeMinHeapWith([1, 2, 3])
+            const removed = sut.extract()
+
+            expect(removed).toBe(1)
+            expect(sut.size()).toBe(2)
+        })
+        it('should heapify after extract', () => {
+            const sut = makeMinHeapWith(generateRange(64))
+
+            sut.extract()
+            sut.extract()
+            sut.extract()
+            sut.extract()
+
+            for (let i = 0; i < 6; i++) {
+                const parent = sut.heap[i]
+                const leftChild = sut.getLeftIndex(parent)
+                const rightChild = sut.getRightIndex(parent)
+
+                if (!!leftChild)
+                    expect(leftChild).toBeGreaterThanOrEqual(parent)
+                if (!!rightChild)
+                    expect(rightChild).toBeGreaterThanOrEqual(parent)
+            }
+        })
+    })
 })
