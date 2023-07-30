@@ -52,20 +52,20 @@ export class MinHeap {
 
         if (
             left < size &&
-            this.compareFn(this.heap[element], this.heap[left]) >
+            this.compareFn(this.heap[element], this.heap[left]) ==
                 Compare.BIGGER_THAN
         ) {
             element = left
         }
         if (
             right < size &&
-            this.compareFn(this.heap[element], this.heap[right]) >
+            this.compareFn(this.heap[element], this.heap[right]) ==
                 Compare.BIGGER_THAN
         ) {
             element = right
         }
         if (index !== element) {
-            this.swap(this.heap, index, element)
+            swap(this.heap, index, element)
             this.siftDown(element)
         }
     }
@@ -74,17 +74,17 @@ export class MinHeap {
         let parent = this.getParentIndex(index)
         while (
             index > 0 &&
-            this.compareFn(this.heap[parent!], this.heap[index]) >
+            this.compareFn(this.heap[parent!], this.heap[index]) ==
                 Compare.BIGGER_THAN
         ) {
-            this.swap(this.heap, index, parent!)
+            swap(this.heap, index, parent!)
             index = parent!
             parent = this.getParentIndex(index)
         }
     }
-    swap(array: number[], a: number, b: number) {
-        const temp = array[a]
-        array[a] = array[b]
-        array[b] = temp
-    }
+}
+function swap(array: number[], a: number, b: number) {
+    const temp = array[a]
+    array[a] = array[b]
+    array[b] = temp
 }
