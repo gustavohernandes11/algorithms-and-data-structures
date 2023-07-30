@@ -3,7 +3,7 @@ import { Compare, defaultCompare } from './utils/defaultCompare'
 type ValidHeapValue = number | string
 
 export class MinHeap {
-    private readonly compareFn
+    protected readonly compareFn
     heap: number[] = []
     constructor(compareFn = defaultCompare) {
         this.compareFn = compareFn
