@@ -3,7 +3,7 @@ import {
     NullableBinaryNode,
     ValidValueType,
 } from './models/BinaryNode'
-import { Compare, defaultCompare } from './utils/defaultCompare'
+import { Compare, defaultCompare } from './utils'
 
 export class BinarySearchTree {
     compareFn: Function

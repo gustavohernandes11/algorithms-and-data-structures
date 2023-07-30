@@ -4,7 +4,7 @@ import {
     NullableBinaryNode,
     ValidValueType,
 } from './models/BinaryNode'
-import { Compare, defaultCompare } from './utils/defaultCompare'
+import { Compare, defaultCompare } from './utils'
 
 export const BalanceFactor = {
     UNBALANCED_RIGHT: 1,

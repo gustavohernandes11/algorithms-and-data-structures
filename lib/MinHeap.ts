@@ -1,11 +1,8 @@
-import { Compare, defaultCompare } from './utils/defaultCompare'
-
-type ValidHeapValue = number | string
+import { Compare, defaultCompare, swap } from './utils'
 
 export class MinHeap {
-    protected readonly compareFn
     heap: number[] = []
-    constructor(compareFn = defaultCompare) {
+    constructor(protected compareFn = defaultCompare) {
         this.compareFn = compareFn
     }
 
@@ -82,9 +79,4 @@ export class MinHeap {
             parent = this.getParentIndex(index)
         }
     }
-}
-function swap(array: number[], a: number, b: number) {
-    const temp = array[a]
-    array[a] = array[b]
-    array[b] = temp
 }
